@@ -29,7 +29,9 @@ This repository contains several modules, namely:
 
 # References
 
-
+* [Learn OpenGL ES](http://www.learnopengles.com/android-lesson-one-getting-started/)
+* [OpenGL ES 2.0 Reference](https://www.khronos.org/opengles/sdk/docs/man/)
+* [Android OpenGL ES 2.0 Tutorial](http://developer.android.com/training/graphics/opengl/index.html)
 
 # License
 
