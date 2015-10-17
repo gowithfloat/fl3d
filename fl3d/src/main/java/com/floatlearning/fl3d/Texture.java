@@ -28,6 +28,7 @@ public class Texture implements Drawable {
     protected final FloatBuffer texBuffer;
     /**
      * The number of this texture, from 0 - 31.
+     * TODO: this is currently unused
      */
     private final int textureNumber;
 
@@ -75,8 +76,8 @@ public class Texture implements Drawable {
      * @param bitmap       The bitmap image that this texture will represent.
      */
     public Texture(final float[] texCoords, final Bitmap bitmap) {
-        int w = bitmap.getWidth();
-        int h = bitmap.getHeight();
+        final int w = bitmap.getWidth();
+        final int h = bitmap.getHeight();
 
         if (w != h || w % 2 != 0) {
             throw new RuntimeException("Tried to create texture from bitmap but not power of two! Dimensions: " + w + "x" + h);
@@ -113,7 +114,7 @@ public class Texture implements Drawable {
     @Override
     public void draw(final Program program) {
         // find the handle for the texture coordinates in the given program
-        int texCoordHandle = GLES20.glGetAttribLocation(program.handle, A_TEX_COORD);
+        final int texCoordHandle = GLES20.glGetAttribLocation(program.handle, A_TEX_COORD);
 
         // activate the 0th texture
         GLES20.glActiveTexture(GLES20.GL_TEXTURE0/* + textureNumber*/);
@@ -138,6 +139,7 @@ public class Texture implements Drawable {
 
     @Override
     public void dispose() {
+        // Delete this texture in the GPU.
         int[] tex = { handle };
         GLES20.glDeleteTextures(1, tex, 0);
     }
@@ -148,7 +150,7 @@ public class Texture implements Drawable {
      * @return  The handle to the new texture object.
      */
     private static int create(final boolean unbind) {
-        int tex = genHandle();
+        final int tex = genHandle();
 
         GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, tex);
 
@@ -164,8 +166,11 @@ public class Texture implements Drawable {
         return tex;
     }
 
+    /**
+     * Generate a handle for a new texture in the GPU.
+     */
     private static int genHandle() {
-        int[] texture = new int[1];
+        final int[] texture = new int[1];
         GLES20.glGenTextures(1, texture, 0);
 
         if (texture[0] == 0) {

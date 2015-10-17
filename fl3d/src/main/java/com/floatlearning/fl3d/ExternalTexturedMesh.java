@@ -2,6 +2,9 @@ package com.floatlearning.fl3d;
 
 import android.graphics.SurfaceTexture;
 
+/**
+ * Simply a mesh with a texture from an external source.
+ */
 public class ExternalTexturedMesh extends Mesh {
     /**
      * A reference to the external texture that will be applied to this object.
@@ -31,7 +34,7 @@ public class ExternalTexturedMesh extends Mesh {
      *
      * @param listener    An object to be notified when new frame data is available.
      */
-    public void setOnFrameAvailableListener(SurfaceTexture.OnFrameAvailableListener listener) {
+    public void setOnFrameAvailableListener(final SurfaceTexture.OnFrameAvailableListener listener) {
         texture.setOnFrameAvailableListener(listener);
     }
 

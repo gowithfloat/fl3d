@@ -28,27 +28,40 @@ public class Core {
         return maxTexSize[0];
     }
 
-    public static Bitmap getRenderedBitmap(final int width, final int height) {
-        return Bitmap.createBitmap(getRenderedPixels(width, height), width, height, Bitmap.Config.ARGB_8888);
+    /**
+     * Returns the currently displayed pixels in a given region, as a Bitmap.
+     *
+     * @param x         The x coordinate of the region to return, in screen pixels.
+     * @param y         The y coordinate of the region to return, in screen pixels.
+     * @param width     The width of the region to return, in screen pixels.
+     * @param height    The height of the region to return, in screen pixels.
+     * @return  A new Bitmap generated from the current OpenGL rendered view.
+     */
+    public static Bitmap getRenderedBitmap(final int x, final int y, final int width, final int height) {
+        return Bitmap.createBitmap(getRenderedPixels(x, y, width, height), width, height, Bitmap.Config.ARGB_8888);
     }
 
-    public static void readRenderedPixels(final int width, final int height, final IntBuffer intBuffer) {
-        GLES20.glReadPixels(0, 0, width, height, GLES20.GL_RGBA, GLES20.GL_UNSIGNED_BYTE, intBuffer);
+    // wrapper for `glReadPixels`, used by FrameProvider
+    static void readRenderedPixels(final int x, final int y, final int width, final int height, final IntBuffer intBuffer) {
+        GLES20.glReadPixels(x, y, width, height, GLES20.GL_RGBA, GLES20.GL_UNSIGNED_BYTE, intBuffer);
     }
 
-    public static int[] getRenderedPixels(final int width, final int height) {
+    // reads pixels but performs some post-processing to fix issues
+    private static int[] getRenderedPixels(final int x, final int y, final int width, final int height) {
         int[] result = new int[width * height];
         final IntBuffer intBuffer = IntBuffer.wrap(result);
-        readRenderedPixels(width, height, intBuffer);
+        readRenderedPixels(x, y, width, height, intBuffer);
 
         intBuffer.clear();
 
         // Red and blue channels need to be swapped
+        // TODO: is there a more efficient way to do this?
         for(int i = 0; i < result.length; i++) {
             result[i] = (result[i] & (0xFF00FF00)) | ((result[i] >> 16) & 0x000000FF) | ((result[i] << 16) & 0x00FF0000);
         }
 
         // images tend to be upside down; fix that
+        // TODO: why is this?
         for(int i = 0; i < result.length / 2; i++) {
             int temp = result[i];
             result[i] = result[result.length - i - 1];

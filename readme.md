@@ -8,6 +8,15 @@ FL3D was designed to support simple 3D rendering in custom applications where a 
 
 This was originally intended to be used for a project, but was set aside in favor of another approach. We opted to open-source it in the hopes that it could be useful to others, but we have no long-term maintenance in mind for this project. That said, feel free to [open an issue](/../../issues/) if you notice a glaring issue, or contact this project's developer ([Steve Richey](https://github.com/steverichey)) if you have a question.
 
+# Goals
+
+* Simplify the process of setting up an OpenGL context.
+* Classes that define behavior for common OpenGL concepts (textures, shaders, meshes, framebuffers).
+* Runtime safety with exceptions thrown for undefined state (such as when shaders fail to compile).
+* Defining shaders in `.glsl` files, as opposed to writing code in strings.
+* Use of `final` where possible to provide safe behavior at runtime.
+* Use of interfaces to allow flexible implementations of core concepts.
+
 # Modules
 
 This repository contains several modules, namely:
@@ -17,6 +26,10 @@ This repository contains several modules, namely:
 * fl3d: The core FL3D module. All other modules provide additional functionality that you may find useful, but only this one is required. This module has no dependencies.
 * glcameraview: An implementation of a simple `FL3DSurfaceView` which receives texture data from the device camera.
 * threadedcamera: Runs the device camera in a dedicated thread, with some optimizations and convenience methods we've developed.
+
+# References
+
+
 
 # License
 

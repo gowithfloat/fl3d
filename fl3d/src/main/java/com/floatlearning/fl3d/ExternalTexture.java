@@ -13,7 +13,7 @@ public class ExternalTexture extends Texture {
     public final SurfaceTexture surface;
 
     /**
-     * Create an external texture with the default
+     * Create an external texture with the default texture coordinates.
      */
     public ExternalTexture() {
         this(DEFAULT_TEX_COORDS);
@@ -35,7 +35,7 @@ public class ExternalTexture extends Texture {
      *
      * @param frameAvailableListener    An object to listen for new available frames.
      */
-    public void setOnFrameAvailableListener(SurfaceTexture.OnFrameAvailableListener frameAvailableListener) {
+    public void setOnFrameAvailableListener(final SurfaceTexture.OnFrameAvailableListener frameAvailableListener) {
         surface.setOnFrameAvailableListener(frameAvailableListener);
     }
 
@@ -47,7 +47,7 @@ public class ExternalTexture extends Texture {
         surface.updateTexImage();
 
         // find the handle for the texture coordinates in the given program
-        int texCoordHandle = GLES20.glGetAttribLocation(program.handle, A_TEX_COORD);
+        final int texCoordHandle = GLES20.glGetAttribLocation(program.handle, A_TEX_COORD);
 
         GLES20.glActiveTexture(GLES20.GL_TEXTURE0);
         GLES20.glBindTexture(GL_TEXTURE_EXTERNAL_OES, handle);

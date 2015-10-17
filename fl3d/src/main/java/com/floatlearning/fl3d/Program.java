@@ -9,7 +9,7 @@ import com.floatlearning.fl3d.interfaces.Bindable;
 import java.nio.FloatBuffer;
 
 /**
- * Manages an OpenGL program, which manages GLSL code and shaders.
+ * Manages an OpenGL program, which in turn manages GLSL code and shaders.
  */
 public class Program implements Bindable {
     /**
@@ -17,11 +17,11 @@ public class Program implements Bindable {
      */
     public final int handle;
     /**
-     * This program's fragment shader.
+     * This program's fragment and vertex shaders.
      */
     private final Shader[] shaders;
     /**
-     * Whether or not one of this program's shaders has texel fields (u_TexelWidth & u_TexelHeight).
+     * Whether or not one of this program's shaders have texel fields (u_TexelWidth & u_TexelHeight).
      */
     private final boolean hasTexelFields;
     /**
@@ -53,7 +53,7 @@ public class Program implements Bindable {
     }
 
     /**
-     * Safely set texel values for this program but only if the shader source code has texel properties.
+     * Safely set texel values for this program, but only if the shader source code has texel properties.
      *
      * @param screenWidth     The width of the screen. The width of one pixel is calculated from this value.
      * @param screenHeight    The height of the screen. The height of one pixel is calculated from this value.
@@ -76,7 +76,7 @@ public class Program implements Bindable {
             throw new RuntimeException("Tried to set " + valueName + " to " + value + " on an unbound program.");
         }
 
-        int valueHandle = getLocation(valueName);
+        final int valueHandle = getLocation(valueName);
         GLES20.glUniform1f(valueHandle, value);
     }
 
@@ -91,7 +91,7 @@ public class Program implements Bindable {
             throw new RuntimeException("Tried to set " + valueName + " on an unbound program.");
         }
 
-        int valueHandle = getLocation(valueName);
+        final int valueHandle = getLocation(valueName);
         GLES20.glUniform4fv(valueHandle, 1, value, 0);
     }
 
@@ -106,7 +106,7 @@ public class Program implements Bindable {
             throw new RuntimeException("Tried to set " + valueName + " on an unbound program.");
         }
 
-        int positionHandle = GLES20.glGetAttribLocation(handle, valueName);
+        final int positionHandle = GLES20.glGetAttribLocation(handle, valueName);
         GLES20.glEnableVertexAttribArray(positionHandle);
         GLES20.glVertexAttribPointer(positionHandle, Mesh.COORDS_PER_VERTEX, GLES20.GL_FLOAT, false, Mesh.VERTEX_STRIDE, value);
     }
@@ -126,7 +126,7 @@ public class Program implements Bindable {
     /**
      * Returns a float value from the current program.
      *
-     * @param valueName    The name of the value to set, e.g. "u_MyValue".
+     * @param valueName    The name of the value to get, e.g. "u_MyValue".
      * @return  The value sent from the GPU.
      */
     public float getValue(final String valueName) {
@@ -134,20 +134,26 @@ public class Program implements Bindable {
             throw new RuntimeException("Tried to get " + valueName + " from an inactive program.");
         }
 
-        int valueHandle = getLocation(valueName);
-        float[] results = new float[1];
+        final int valueHandle = getLocation(valueName);
+        final float[] results = new float[1];
         GLES20.glGetUniformfv(handle, valueHandle, results, 0);
 
         return results[0];
     }
 
+    /**
+     * Returns a float array value from the current program.
+     *
+     * @param valueName    The name of the value to get, e.g. "a_MyValue".
+     * @return  The value sent from the GPU.
+     */
     public float[] getValue(final String valueName, final int length) {
         if (!bound) {
             throw new RuntimeException("Tried to get " + valueName + " from an inactive program");
         }
 
-        int valueHandle = getLocation(valueName);
-        float[] results = new float[length];
+        final int valueHandle = getLocation(valueName);
+        final float[] results = new float[length];
         GLES20.glGetUniformfv(handle, valueHandle, results, 0);
 
         return results;
@@ -203,6 +209,7 @@ public class Program implements Bindable {
             throw new RuntimeException("Couldn't create program");
         }
 
+        // Attach each shader to the program.
         for (Shader s : shaders) {
             GLES20.glAttachShader(program, s.handle);
             Core.assertStatus("Tried to attach shader that was already attached: " + s.name);

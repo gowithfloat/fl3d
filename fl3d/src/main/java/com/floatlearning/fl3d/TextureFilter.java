@@ -6,6 +6,9 @@ import com.floatlearning.fl3d.interfaces.Disposable;
 import com.floatlearning.fl3d.interfaces.DrawToable;
 import com.floatlearning.fl3d.interfaces.Drawable;
 
+/**
+ * Generally, can be used to filter on FrameBuffer and render to another, such as post-processing an image.
+ */
 public class TextureFilter implements Disposable, DrawToable {
     /**
      * The frame buffer that will store this filter's output.
@@ -69,6 +72,9 @@ public class TextureFilter implements Disposable, DrawToable {
         }
     }
 
+    /**
+     * Returns the internal target texture, which receives the filtered output.
+     */
     public Texture getTexture() {
         return target.texture;
     }

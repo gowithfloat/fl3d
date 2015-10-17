@@ -49,6 +49,8 @@ public abstract class FL3DSurfaceView extends GLSurfaceView implements GLSurface
     public FL3DSurfaceView(final Context context) {
         super(context);
 
+        // log errors if building for debug
+        // TODO: this may not work on some versions of Android Studio
         if (BuildConfig.DEBUG) {
             setDebugFlags(DEBUG_CHECK_GL_ERROR | DEBUG_LOG_GL_CALLS);
         }
@@ -63,7 +65,7 @@ public abstract class FL3DSurfaceView extends GLSurfaceView implements GLSurface
      * @param drawable    The object to be drawn.
      * @return  This surface view.
      */
-    public final FL3DSurfaceView add(Drawable drawable) {
+    public final FL3DSurfaceView add(final Drawable drawable) {
         synchronized (memberLock) {
             drawables.add(drawable);
         }
@@ -77,7 +79,7 @@ public abstract class FL3DSurfaceView extends GLSurfaceView implements GLSurface
      * @param drawable    The object to no longer be drawn.
      * @return  This surface view.
      */
-    public final FL3DSurfaceView remove(Drawable drawable) {
+    public final FL3DSurfaceView remove(final Drawable drawable) {
         synchronized (memberLock) {
             drawables.remove(drawable);
         }
@@ -144,7 +146,7 @@ public abstract class FL3DSurfaceView extends GLSurfaceView implements GLSurface
     }
 
     /**
-     * Updates the OpenGL viewport and the texel information.
+     * Updates the OpenGL viewport.
      */
     @Override
     public void onSurfaceChanged(GL10 ignored, int width, int height) {

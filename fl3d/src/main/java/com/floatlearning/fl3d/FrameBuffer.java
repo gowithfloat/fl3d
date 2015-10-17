@@ -33,7 +33,7 @@ public class FrameBuffer implements Bindable {
 
     /**
      * Generate a new frame buffer that can be rendered to.
-     * This could be used to store future frames, or in our case, provide layers of image processing.
+     * This could be used to store future frames, or provide layers of image processing.
      *
      * @param width     The width of the currently displayed frame. Will determine the width of the texture for this frame buffer.
      * @param height    The height of the current frame, used to generate the internal texture.
@@ -96,7 +96,7 @@ public class FrameBuffer implements Bindable {
      * Automatically called during instantiation, to verify that this frame buffer was set up properly.
      */
     public void assertStatus() {
-        int status = GLES20.glCheckFramebufferStatus(GLES20.GL_FRAMEBUFFER);
+        final int status = GLES20.glCheckFramebufferStatus(GLES20.GL_FRAMEBUFFER);
 
         switch (status) {
             case (GLES20.GL_FRAMEBUFFER_INCOMPLETE_ATTACHMENT):
