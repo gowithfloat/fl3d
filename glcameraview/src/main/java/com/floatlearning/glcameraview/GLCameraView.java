@@ -236,7 +236,7 @@ public class GLCameraView extends FL3DSurfaceView implements SurfaceTexture.OnFr
 
         // save the results of the edge detect filter to file, if requested
         if (pendingCapture) {
-            Bitmap bitmap = Core.getRenderedBitmap(width, height);
+            Bitmap bitmap = Core.getRenderedBitmap(0, 0, width, height);
             FileIO.saveImageFromBitmapWithTimestamp(bitmap, pendingCaptureFolder, pendingCaptureFilename, true);
             bitmap.recycle();
             pendingCapture = false;
