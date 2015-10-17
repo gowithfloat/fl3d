@@ -1,1 +1,1 @@
-include ':app', ':fl3d'
+include ':app', ':fl3d', ':threadedcamera', ':fileio', ':glcameraview'
