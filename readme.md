@@ -1,4 +1,4 @@
-# [FL3D](https://github.com/floatlearning/fl3d) [![Build Status](https://travis-ci.org/floatlearning/fl3d.svg?branch=master)](https://travis-ci.org/floatlearning/fl3d)
+# [FL3D](https://github.com/gowithfloat/fl3d) [![Build Status](https://travis-ci.org/gowithfloat/fl3d.svg?branch=master)](https://travis-ci.org/gowithfloat/fl3d)
 
 FL3D is a lightweight 3D engine for Android devices supporting [OpenGL ES 2.0](https://www.khronos.org/opengles/2_X/). The focus of this library is to abstract away some of the obscure commands required for OpenGL rendering, without sacrificing performance on low-power devices. This project is designed for [Android Studio](http://developer.android.com/tools/studio/index.html) and uses the standard [Gradle](http://gradle.org/) build system with some additional functionality in separate modules.
 
