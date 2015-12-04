@@ -35,4 +35,4 @@ This repository contains several modules, namely:
 
 # License
 
-&copy; 2015 [Float Mobile Learning](http://floatlearning.com/). Shared under an [MIT license](https://en.wikipedia.org/wiki/MIT_License). See [license.md](./license.md) for details.
+&copy; 2015 [Float](http://gowithfloat.com/). Shared under an [MIT license](https://en.wikipedia.org/wiki/MIT_License). See [license.md](./license.md) for details.
